@@ -1,9 +1,9 @@
 package com.step.bank;
 
 public class Account {
-    private static final int MinimumBalance = 1000;
+    private static final double MinimumBalance = 1000;
     private String accountNumber;
-    private int accountBalance;
+    private double accountBalance;
 
     public Account(String accountNumber, int accountBalance) throws MinimumBalanceException, InvalidAccountNumberException {
         validateAccount(accountNumber,accountBalance);
@@ -23,7 +23,18 @@ public class Account {
         return accountNumber;
     }
 
-    public int getAccountBalance(){
+    public double getAccountBalance(){
+        return accountBalance;
+    }
+
+    public double withdraw(int amount) throws InsuffficientBalanceException {
+        if(amount > accountBalance - MinimumBalance) throw new InsuffficientBalanceException();
+        accountBalance -= amount;
+        return accountBalance;
+    }
+
+    public double credit(double amount) {
+        accountBalance += amount;
         return accountBalance;
     }
 }
