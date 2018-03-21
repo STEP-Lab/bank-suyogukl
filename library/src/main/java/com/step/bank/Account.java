@@ -27,13 +27,17 @@ public class Account {
         return accountBalance;
     }
 
-    public double withdraw(int amount) throws InsuffficientBalanceException {
-        if(amount > accountBalance - MinimumBalance) throw new InsuffficientBalanceException();
+    public double withdraw(double amount) throws InsufficientBalanceException {
+        if(amount > accountBalance - MinimumBalance) throw new InsufficientBalanceException();
         accountBalance -= amount;
         return accountBalance;
     }
 
-    public double credit(double amount) {
+    public double credit(double amount) throws InvalidCreditAmountException {
+        int min=0;
+        if (min > amount) {
+            throw new InvalidCreditAmountException();
+        }
         accountBalance += amount;
         return accountBalance;
     }

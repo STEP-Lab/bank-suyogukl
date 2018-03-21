@@ -1,7 +1,4 @@
-import com.step.bank.Account;
-import com.step.bank.InsuffficientBalanceException;
-import com.step.bank.InvalidAccountNumberException;
-import com.step.bank.MinimumBalanceException;
+import com.step.bank.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,18 +36,28 @@ public class AccountTest {
     }
 
     @Test
-    public void CheckWithdrawal() throws InsuffficientBalanceException {
+    public void CheckWithdrawal() throws InsufficientBalanceException {
         assertEquals(account.withdraw(800),1200,0);
     }
 
-    @Test(expected = InsuffficientBalanceException.class)
-    public void CheckInsufficientBalanceException() throws InsuffficientBalanceException {
+    @Test(expected = InsufficientBalanceException.class)
+    public void CheckInsufficientBalanceException() throws InsufficientBalanceException {
         account.withdraw(2000);
     }
 
     @Test
-    public void ShouldCreditToAccount() {
+    public void ShouldCreditToAccount() throws InvalidCreditAmountException {
         double balance = account.credit(1000);
         assertEquals(balance,3000,0);
+    }
+
+    @Test(expected = InvalidCreditAmountException.class)
+    public void ShouldGiveInvalidCreditAmountException() throws InvalidCreditAmountException {
+        account.credit(-200.0);
+    }
+
+    @Test
+    public void ShouldGiveInvalidDebitAmountException() throws InsufficientBalanceException {
+        account.withdraw(-200.0);
     }
 }
