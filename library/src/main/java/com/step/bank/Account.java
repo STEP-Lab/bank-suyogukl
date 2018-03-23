@@ -1,13 +1,17 @@
 package com.step.bank;
 
+import java.util.Objects;
+
 public class Account {
     private static final double MinimumBalance = 1000;
-    private AccountNumber accountNumber;
+    private final AccountNumber accountNumber;
     private double accountBalance;
+    private final String name;
 
-    public Account(String accountNumber, int accountBalance) throws MinimumBalanceException, InvalidAccountNumberException {
+    public Account(String name, AccountNumber accountNumber, int accountBalance) throws MinimumBalanceException {
+        this.name = name;
         validateAccount(accountBalance);
-        this.accountNumber = new AccountNumber(accountNumber);
+        this.accountNumber = accountNumber;
         this.accountBalance = accountBalance;
     }
     private void validateAccount(int accountBalance) throws MinimumBalanceException{
@@ -33,5 +37,25 @@ public class Account {
         }
         accountBalance += amount;
         return accountBalance;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return Double.compare(account.accountBalance, accountBalance) == 0 &&
+                Objects.equals(accountNumber, account.accountNumber) &&
+                Objects.equals(name, account.name);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(accountNumber, accountBalance, name);
+    }
+
+    public Summary getSummary() {
+        return new Summary(name,accountNumber,accountBalance);
     }
 }

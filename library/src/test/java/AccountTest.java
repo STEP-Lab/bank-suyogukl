@@ -12,16 +12,15 @@ public class AccountTest {
 
     @Before
     public void setUp() throws MinimumBalanceException, InvalidAccountNumberException {
-        account=new Account("1234-1234",2000);
+        account=new Account("suyog",new AccountNumber("1234-1234"),2000);
     }
-
     @Test
     public void checkAccountBalance() {
         assertThat(account.getAccountBalance(),is(2000.0));
     }
     @Test(expected = MinimumBalanceException.class)
     public void checkMinimumBalance() throws MinimumBalanceException, InvalidAccountNumberException {
-        new Account("1234-1234",100);
+        new Account("suyog", new AccountNumber("1234-1234"),100);
     }
 
     @Test
@@ -49,4 +48,10 @@ public class AccountTest {
     public void ShouldGiveInvalidDebitAmountException() throws InsufficientBalanceException {
         account.withdraw(-200.0);
     }
+
+    @Test
+    public void ShouldGiveSummary() throws InvalidAccountNumberException {
+        assertThat(account.getSummary(),is(new Summary("suyog", new AccountNumber("1234-1234"),2000)));
+    }
+
 }
