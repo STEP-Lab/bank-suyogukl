@@ -5,8 +5,17 @@ import org.junit.Test;
 public class AccountNumberTest {
 
     @Test(expected = InvalidAccountNumberException.class)
-    public void ValidateAccountNumber() throws InvalidAccountNumberException {
-        new AccountNumber("1234-123");
+    public void ShouldGiveExceptionForLessCharacter() throws InvalidAccountNumberException {
+        new AccountNumber("1234-12");
     }
 
+    @Test(expected =    InvalidAccountNumberException.class)
+    public void ShouldGiveExceptionForAlphaNumCharacter() throws InvalidAccountNumberException {
+        new AccountNumber(("123a-123d"));
+    }
+
+    @Test(expected = InvalidAccountNumberException.class)
+    public void ShouldGiveExceptionForCharacterWithoutHyphen() throws InvalidAccountNumberException {
+        new AccountNumber("12341234");
+    }
 }
